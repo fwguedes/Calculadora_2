@@ -1,11 +1,13 @@
-﻿using Calculadora_2.Interfaces;
-using Calculadora_2.Managers;
+﻿using Calculadora.Interfaces;
+using Calculadora.Managers;
 using System;
-using Calculadora_2.Dependency;
-using Calculadora_2.Processors;
-using Calculadora_2.ConfigurationUtility;
+using Calculadora.Dependency;
+using Calculadora.Processors;
+using Calculadora.ConfigurationUtility;
 
-namespace Calculadora_2 {
+
+
+namespace Calculadora {
 
     internal class Program {
 
@@ -13,7 +15,7 @@ namespace Calculadora_2 {
             
             Injection();
 
-            IManager manager = DependencyInjector.Get<IManager>();
+            ICalculatorManager manager = DependencyInjector.Get<ICalculatorManager>();
             manager.Execute();
             
             Console.WriteLine("Enter para sair");
@@ -22,7 +24,7 @@ namespace Calculadora_2 {
 
         public static void Injection()
         {
-            DependencyInjector.Register<IManager, Manager>();
+            DependencyInjector.Register<ICalculatorManager, CalculatorManager>();
             DependencyInjector.Register<IRabbitProcessor, RabbitProcessor>();
             DependencyInjector.Register<ICalculatorProcessor, CalculatorProcessor>();
             DependencyInjector.Register<ICalculatorConfiguration, CalculatorConfiguration>();

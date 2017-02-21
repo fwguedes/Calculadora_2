@@ -1,0 +1,5 @@
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\ConfigurationUtility\bin\Debug\ConfigurationUtility.dll
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\ConfigurationUtility\bin\Debug\ConfigurationUtility.pdb
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\ConfigurationUtility\obj\Debug\ConfigurationUtility.dll
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\ConfigurationUtility\obj\Debug\ConfigurationUtility.pdb
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\ConfigurationUtility\obj\Debug\ConfigurationUtility.csprojResolveAssemblyReference.cache

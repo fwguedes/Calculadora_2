@@ -4,7 +4,7 @@
 using Glimpse.AspNet.Extensions;
 using Glimpse.Core.Extensibility;
 
-namespace Calculadora_2
+namespace Calculadora
 {
     public class GlimpseSecurityPolicy:IRuntimePolicy
     {

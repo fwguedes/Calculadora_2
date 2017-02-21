@@ -1,11 +1,12 @@
-﻿using Calculadora_2.Interfaces;
+﻿using Calculadora.Interfaces;
+using CalculadoraAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Calculadora_2.Processors {
+namespace Calculadora.Processors {
     class CalculatorProcessor : ICalculatorProcessor {
 
         /// <summary>
@@ -13,13 +14,18 @@ namespace Calculadora_2.Processors {
         /// </summary>
         /// <param name="conta">A conta em formato string</param>
         /// <returns></returns>
-        public string ProcessCalc(string conta) {
+        public Resultado ProcessCalc(string conta) {
             string[] numeros = conta.Split(';');
 
             if (numeros[2] != "+" && numeros[2] != "-" && numeros[2] != "*" && numeros[2] != "/") {
-                return "Operacao Invalida";
+                return null;
             } else {
-                return Calculate(numeros[2], Convert.ToDouble(numeros[0]), Convert.ToDouble(numeros[1])).ToString();
+                var operacao = numeros[2];
+                var valor1 = Convert.ToDouble(numeros[0]);
+                var valor2 = Convert.ToDouble(numeros[1]);
+                var resultado = Calculate(operacao, valor1, valor2);
+
+                return new Resultado() { Valor = resultado };
             }
         }
 

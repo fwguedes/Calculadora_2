@@ -1,4 +1,5 @@
-﻿using Calculadora_2.Interfaces;
+﻿using Calculadora.Interfaces;
+using CalculadoraAPI.Models;
 using DNAuth.StackLibrary.UtilityStack.Library;
 using DNAuth.StackLibrary.UtilityStack.Library.Enums;
 using RabbitMQ.Client;
@@ -6,7 +7,7 @@ using RabbitMQ.Client.Events;
 using System;
 using System.Text;
 
-namespace Calculadora_2.Processors {
+namespace Calculadora.Processors {
 
     internal class RabbitProcessor : IRabbitProcessor {
         private IConnectionFactory factory;
@@ -16,7 +17,8 @@ namespace Calculadora_2.Processors {
         private string queueName;
         private ICalculatorProcessor calculatorProcessor;
         private ICalculatorConfiguration calcConfig;
-                     
+        private delegate string responseCallBack(string message);
+
 
         /// <summary>
         ///Conectar com o "servidor" do Rabbit
@@ -95,19 +97,18 @@ namespace Calculadora_2.Processors {
             consumer.Received += (model, ea) => {
                 var message = Encoding.UTF8.GetString(ea.Body);
                 Console.WriteLine("Recebido : {0}", message);
-                Response(calculatorProcessor.ProcessCalc(message), ea);                
+                Response(calculatorProcessor.ProcessCalc(message), ea);
+                                
             };
         }
-
-       
 
         /// <summary>
         /// Resposta ao "cliente" que enviou a mensagem
         /// </summary>
         /// <param name="message">Mensagem a ser enviada</param>
         /// <param name="ea">Argumentos do Evento</param>
-        private void Response(string message, BasicDeliverEventArgs ea) {
-            var responseBytes = Encoding.UTF8.GetBytes(message);
+        private void Response(Resultado message, BasicDeliverEventArgs ea) {
+            var responseBytes = StringUtility.ObjectToJsonBuffed(message);
             var replyProps = channel.CreateBasicProperties();
             replyProps.CorrelationId = ea.BasicProperties.CorrelationId;
             

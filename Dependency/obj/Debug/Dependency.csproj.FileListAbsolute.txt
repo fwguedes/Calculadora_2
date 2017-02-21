@@ -1,0 +1,12 @@
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\Dependency\bin\Debug\Dependency.dll
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\Dependency\bin\Debug\Dependency.pdb
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\Dependency\bin\Debug\ConfigurationUtility.dll
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\Dependency\bin\Debug\Glimpse.AspNet.dll
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\Dependency\bin\Debug\Glimpse.Core.dll
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\Dependency\bin\Debug\Glimpse.SimpleInjector.dll
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\Dependency\bin\Debug\SimpleInjector.dll
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\Dependency\bin\Debug\ConfigurationUtility.pdb
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\Dependency\bin\Debug\SimpleInjector.xml
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\Dependency\obj\Debug\Dependency.csprojResolveAssemblyReference.cache
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\Dependency\obj\Debug\Dependency.dll
+C:\Users\fguedes\Documents\Visual Studio 2015\Projects\Calculadora_2\Dependency\obj\Debug\Dependency.pdb
