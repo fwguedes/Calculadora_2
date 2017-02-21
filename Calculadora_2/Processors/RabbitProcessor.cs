@@ -1,4 +1,6 @@
 ﻿using Calculadora_2.Interfaces;
+using DNAuth.StackLibrary.UtilityStack.Library;
+using DNAuth.StackLibrary.UtilityStack.Library.Enums;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
@@ -12,7 +14,8 @@ namespace Calculadora_2.Processors {
         private IModel channel;
         private EventingBasicConsumer consumer;
         private string queueName;
-        private ICalculatorProcessor calculator;
+        private ICalculatorProcessor calculatorProcessor;
+        private ICalculatorConfiguration calcConfig;
                      
 
         /// <summary>
@@ -20,8 +23,15 @@ namespace Calculadora_2.Processors {
         ///Criar o canal para esta conexao
         /// </summary>
         /// <param name="hostname">Endereco do "servidor"</param>
-        public void ConnectServer(string hostname) {
-            factory = new ConnectionFactory() { HostName = hostname };
+        public void ConnectServer() {
+
+            calcConfig = Dependency.DependencyInjector.Get<ICalculatorConfiguration>();
+
+            factory = new ConnectionFactory() { HostName = calcConfig.HostName, VirtualHost = calcConfig.VirtualHost };
+
+            factory.UserName = CredeltialsRegistryUtility.GetValue(ServiceName.RabbitMQ, calcConfig.UserName );
+            factory.Password = CredeltialsRegistryUtility.GetValue(ServiceName.RabbitMQ, calcConfig.Password );
+
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
         }
@@ -30,12 +40,12 @@ namespace Calculadora_2.Processors {
         /// Criacao da fila
         /// </summary>
         /// <param name="queueName">Nome da Fila</param>
-        public void ConnectQueue(string queueName) {
+        public void ConnectQueue() {
             if (connection == null) {
                 throw new Exception("Não há servidor conectado");
             }
 
-            this.queueName = queueName;
+            this.queueName = calcConfig.QueueName;
 
             channel.QueueDeclare(queue: this.queueName,
                                 durable: false,
@@ -81,11 +91,11 @@ namespace Calculadora_2.Processors {
         /// Evento de quando uma mensagem é recebida da fila
         /// </summary>
         private void MessageReceived() {
-            calculator = new CalculatorProcessor();
+            calculatorProcessor = Dependency.DependencyInjector.Get<ICalculatorProcessor>();            
             consumer.Received += (model, ea) => {
                 var message = Encoding.UTF8.GetString(ea.Body);
                 Console.WriteLine("Recebido : {0}", message);
-                Response(calculator.ProcessCalc(message), ea);                
+                Response(calculatorProcessor.ProcessCalc(message), ea);                
             };
         }
 

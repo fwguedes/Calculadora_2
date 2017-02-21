@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace Calculadora_2.Interfaces {
     interface IManager {
 
-        IManager ConnectServer(string hostname);
-        IManager ConnectQueue(string queueName);
-        IManager DefineQoS(uint prefechSize, ushort prefechCount, bool global);
-        IManager Start();
-
+        void ConnectServer();
+        void ConnectQueue();
+        void DefineQoS(uint prefechSize, ushort prefechCount, bool global);
+        void Start();
+        void Execute();
     }
 }

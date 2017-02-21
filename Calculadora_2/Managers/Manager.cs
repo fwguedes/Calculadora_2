@@ -6,38 +6,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Calculadora_2.Managers {
-    class Manager : IManager {
+namespace Calculadora_2.Managers
+{
+    class Manager : IManager
+    {
 
         IRabbitProcessor rabbitProcessor;
-        ICalculatorProcessor calculatorProcessor;
+        ICalculatorConfiguration calcConfig;
 
         /// <summary>
-        /// Constroi o Manager e seus processors
-        /// </summary>
-        public Manager() {
-            rabbitProcessor = new RabbitProcessor();
-            calculatorProcessor = new CalculatorProcessor();
-        }
-        
-        /// <summary>
         /// Conecta com o "servidor"
-        /// </summary>
-        /// <param name="hostname">Endereco do Servidor</param>
+        /// </summary>        
         /// <returns></returns>
-        public IManager ConnectServer(string hostname) {
-            rabbitProcessor.ConnectServer(hostname);
-            return this;
+        public void ConnectServer()
+        {
+            calcConfig = Dependency.DependencyInjector.Get<ICalculatorConfiguration>();
+            rabbitProcessor = Dependency.DependencyInjector.Get<IRabbitProcessor>();
+            rabbitProcessor.ConnectServer();
+            
         }
 
         /// <summary>
         /// Conecta com a fila
-        /// </summary>
-        /// <param name="queueName">Nome da Fila</param>
+        /// </summary>        
         /// <returns></returns>
-        public IManager ConnectQueue(string queueName) {
-            rabbitProcessor.ConnectQueue(queueName);
-            return this;
+        public void ConnectQueue()
+        {
+            rabbitProcessor.ConnectQueue();
+            
         }
 
         /// <summary>
@@ -47,19 +43,28 @@ namespace Calculadora_2.Managers {
         /// <param name="prefechCount">Quantidade maxima de taredas pendentes</param>
         /// <param name="global">Se a configuracao e para todo canal ou para cada 'consumer'</param>
         /// <returns></returns>
-        public IManager DefineQoS(uint prefechSize, ushort prefechCount, bool global) {
+        public void DefineQoS(uint prefechSize, ushort prefechCount, bool global)
+        {
             rabbitProcessor.DefineQoS(prefechSize, prefechCount, global);
-            return this;
+            
         }
 
         /// <summary>
         /// Inicia o 'consumer'
         /// </summary>
         /// <returns></returns>
-        public IManager Start() {
+        public void Start()
+        {
             rabbitProcessor.Start();
-            return this;
+            
         }
-        
+
+        public void Execute()
+        {
+            ConnectServer();
+            ConnectQueue();
+            DefineQoS(0, 1, true);
+            Start();            
+        }
     }
 }
